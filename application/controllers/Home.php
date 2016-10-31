@@ -258,6 +258,7 @@ class Home extends CI_Controller
 				$this->load->model('m_user');
 				$query = $this->m_user->sendEmail();
 
+
 				if($query)
 					$this->session->set_flashdata('status', 'Staff invited!');
 				else 

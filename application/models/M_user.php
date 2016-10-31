@@ -1,4 +1,6 @@
 <?php
+require_once(APPPATH.'third_party/class.phpmailer.php');
+
 class M_user extends CI_Model
 {
 	private $details;
@@ -202,21 +204,18 @@ class M_user extends CI_Model
 
 	public function sendEmail()
 	{
-		$email = $this->input->post('staff_email');
+		$to = $this->input->post('staff_email');
+		$from = 'info@jquery404.com';
+		$email = new PHPMailer();
+		$email->addReplyTo($from, 'Information');
+		$email->From      = $from;		
+		$email->FromName  = "E-Training";
+		$email->Subject   = "E-Training";
+		$email->Body      = 'Click us out .. ';
+		$email->AddAddress( $to );
+		$email->IsHTML(true);
 
-		$this->load->library('email');
-
-
-		$this->email->from('admin@jquery404.com', 'Super Admin');
-		$this->email->to($email);
-
-		$this->email->subject('Invitation');
-		$this->email->message('Testing invitation');
-
-		if ( !$this->email->send() )		
-		   return false;		
-		else 
-			return true;
+		return $email->Send();
 	}
 
 	public function toggleUser()
