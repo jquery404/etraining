@@ -175,6 +175,27 @@
         return false;
     });
 
+    $(document).on('click', '.utoggle', function(e){   
+        
+      var id = $(this).parents('tr').attr('alt');
+      var checked = $(this).is(':checked');
+     
+      $.post("<?php echo site_url(); ?>/home/toggleUser", 
+        { id: id, status: checked }, function(data) {           
+        
+          var res = JSON.parse(data); 
+            if(res.status)
+              location.reload(true);
+            else
+            {
+              sweetAlert("Oops...", res.err_msg, "error");             
+              $this.removeAttr('disabled');
+            }    
+      }); 
+      
+      
+    });
+
 
     $('.delstudent').each(function( i ) {
       $(this).on('click', function(){

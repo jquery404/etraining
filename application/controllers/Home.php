@@ -296,6 +296,35 @@ class Home extends CI_Controller
 
 	}
 
+	public function toggleUser()
+	{
+		$role = $this->session->userdata('userdata')['role'];
+		$perm = $this->session->userdata('userdata')['permissions'];
+
+		
+		if ($this->session->userdata('is_logged_in') && in_array("toggle_user", $perm)){
+			$this->load->model('m_user');
+
+			$query = $this->m_user->toggleUser();
+			if($query)
+			{
+				$data = array(				
+					'status' => 1,
+					'msg' => 'Successfully changed'
+				);
+				echo json_encode($data);
+			}
+			else
+			{
+				$data = array(				
+					'status' => 0,
+					'err_msg' => 'Error occured' 
+				);
+				echo json_encode($data);
+			}
+		}
+	}
+
 	
 
 }

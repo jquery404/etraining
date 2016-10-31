@@ -39,7 +39,7 @@
 
               <?php foreach ($user_list as $key=>$student): ?>
                 <tr alt="<?php echo $student->id; ?>">
-                  <td align=""><input type="checkbox" <?php if($student->status) echo "checked"; ?>></td>
+                  <td align=""><input class="utoggle" type="checkbox" <?php if($student->status) echo "checked"; ?>></td>
                   <td><?php echo ($key+1); ?></td>
                   <td><?php echo $student->email; ?></td>
                   <td><?php if($student->status) echo "active"; else echo "inactive"; ?></td>

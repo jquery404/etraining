@@ -219,6 +219,17 @@ class M_user extends CI_Model
 			return true;
 	}
 
+	public function toggleUser()
+	{
+		$this->db->where('id', $this->input->post('id'));
+    	$this->db->update('users', array(
+		    'status' => ($this->input->post('status')=='true') ? 1 : 0
+		));
+
+		return ($this->db->affected_rows() != 1) ? false : true;
+
+	}
+
 	function set_session()
 	{
 		$this->session->sess_expiration = '1800';
