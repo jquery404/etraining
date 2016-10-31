@@ -111,18 +111,21 @@
 
     $(document).on('click', '.btn-sub-edit-std', function(e){
         
-        $(this).attr('disabled', 'disabled');
+        $this = $(this);
+        $this.attr('disabled', 'disabled');
 
         $.post("<?php echo site_url(); ?>/home/edit", 
           $("#editStaffForm").serialize(), function(data) {
-          
             var res = JSON.parse(data); 
             if(res.status)
               location.reload(true);
             else
-              sweetAlert("Oops...", res.err_msg, "error");
-
-            $(this).removeAttr('disabled');
+            {
+              sweetAlert("Oops...", res.err_msg, "error");             
+              $this.removeAttr('disabled');
+            }    
+            
+            
         }); 
         
         return false;
@@ -153,7 +156,8 @@
 
     $(document).on('click', '.btn-sub-edit-qus', function(e){
         
-        $(this).attr('disabled', 'disabled');
+        $this = $(this);
+        $this.attr('disabled', 'disabled');
 
         $.post("<?php echo site_url(); ?>/admin/editQuestion", 
           $("#editQuestionForm").serialize(), function(data) {           
@@ -162,9 +166,10 @@
             if(res.status)
               location.reload(true);
             else
+            {
               sweetAlert("Oops...", res.err_msg, "error");
-
-            $(this).removeAttr('disabled');
+              $this.removeAttr('disabled');
+            }            
         }); 
         
         return false;

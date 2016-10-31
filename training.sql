@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 27, 2016 at 02:22 AM
+-- Generation Time: Oct 30, 2016 at 10:57 AM
 -- Server version: 5.7.11
 -- PHP Version: 5.6.19
 
@@ -63,7 +63,10 @@ INSERT INTO `permissions` (`id`, `name`, `display_name`) VALUES
 (3, 'del_staff', 'Delete Staff'),
 (4, 'read_staff', 'Read Staff'),
 (5, 'search_staff', 'Search Staff'),
-(6, 'print_staff', 'Print Staff');
+(6, 'print_staff', 'Print Staff'),
+(7, 'invite_user', 'Invite User'),
+(8, 'user_group', 'User Group'),
+(9, 'toggle_user', 'User Active/Deactive');
 
 -- --------------------------------------------------------
 
@@ -94,7 +97,10 @@ INSERT INTO `permissions_role` (`id`, `permission_id`, `role_id`) VALUES
 (10, 3, 1),
 (11, 4, 1),
 (12, 5, 1),
-(13, 6, 1);
+(13, 6, 1),
+(14, 7, 1),
+(15, 8, 1),
+(16, 9, 1);
 
 -- --------------------------------------------------------
 
@@ -223,12 +229,12 @@ ALTER TABLE `assigned_roles`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
 -- AUTO_INCREMENT for table `permissions_role`
 --
 ALTER TABLE `permissions_role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `roles`
 --

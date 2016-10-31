@@ -153,6 +153,7 @@ class M_user extends CI_Model
 				'date_end' 		=> $this->input->post('eend_date')
 			)
 		);
+
 		return ($this->db->affected_rows() != 1) ? false : true;
 	}
 
@@ -189,6 +190,34 @@ class M_user extends CI_Model
 		
 	}
 
+	public function getUser($id)
+	{
+		$this->db->select('id, email, status');
+		$row = $this->db->get_where('users', array('id !=' => $id));
+		$this->details = $row->result();
+
+		return $this->details;
+	}
+
+
+	public function sendEmail()
+	{
+		$email = $this->input->post('staff_email');
+
+		$this->load->library('email');
+
+
+		$this->email->from('admin@jquery404.com', 'Super Admin');
+		$this->email->to($email);
+
+		$this->email->subject('Invitation');
+		$this->email->message('Testing invitation');
+
+		if ( !$this->email->send() )		
+		   return false;		
+		else 
+			return true;
+	}
 
 	function set_session()
 	{

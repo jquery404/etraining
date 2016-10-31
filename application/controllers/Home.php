@@ -106,7 +106,7 @@ class Home extends CI_Controller
 
 				$data = array(				
 					'status' => 0,
-					'err_msg' => validation_errors('<p class="error">')
+					'err_msg' => validation_errors()
 				);
 			
 				echo json_encode($data);
@@ -215,6 +215,85 @@ class Home extends CI_Controller
 		}else
 			redirect('login');
 		
+	}
+
+	public function invite_user()
+	{
+		$role = $this->session->userdata('userdata')['role'];
+		$perm = $this->session->userdata('userdata')['permissions'];
+
+		if ($this->session->userdata('is_logged_in') && in_array("invite_user", $perm)){
+			$data['title'] = 'Welcome to Training';
+			$data['role'] = $role;
+			$data['error'] = $this->session->flashdata('error');
+			$data['status'] = $this->session->flashdata('status');
+			$data['show_nav'] = true;
+			$data['show_header'] = true;	
+			$data['permissions'] = $perm;
+			$data['body_class']= 'skin-blue sidebar-mini';
+			$data['title'] = 'Admin Page';
+			$data['main_content'] = 'vInviteStaff';
+			$this->load->view('include/template', $data);
+		}else
+			redirect('login');
+
+	}
+
+	public function send_invite()
+	{
+		$role = $this->session->userdata('userdata')['role'];
+		$perm = $this->session->userdata('userdata')['permissions'];
+
+		if ($this->session->userdata('is_logged_in') && in_array("invite_user", $perm)){
+
+			$this->form_validation->set_rules('staff_email', 'Email', 'trim|required|valid_email');
+
+			if($this->form_validation->run() == FALSE)
+			{	
+				$this->session->set_flashdata('error', validation_errors('<p class="error">'));
+				redirect('home/invite_user');
+			}
+			else
+			{
+				$this->load->model('m_user');
+				$query = $this->m_user->sendEmail();
+
+				if($query)
+					$this->session->set_flashdata('status', 'Staff invited!');
+				else 
+					$this->session->set_flashdata('status', 'Error occured');
+
+				redirect('home/invite_user');
+
+			}
+
+		}
+		
+	}
+
+	public function user_toggle()
+	{
+		$role = $this->session->userdata('userdata')['role'];
+		$perm = $this->session->userdata('userdata')['permissions'];
+
+		
+		if ($this->session->userdata('is_logged_in') && in_array("toggle_user", $perm)){
+			$this->load->model('m_user');
+
+			$data['title'] = 'Welcome to Training';
+			$data['role'] = $role;
+			$data['error'] = $this->session->flashdata('error');
+			$data['user_list'] = $this->m_user->getUser($this->session->userdata('userdata')['id']);
+			$data['show_nav'] = true;
+			$data['show_header'] = true;	
+			$data['permissions'] = $perm;
+			$data['body_class']= 'skin-blue sidebar-mini';
+			$data['title'] = 'Admin Page';
+			$data['main_content'] = 'vToggleUser';
+			$this->load->view('include/template', $data);
+		}else
+			redirect('login');
+
 	}
 
 	

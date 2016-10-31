@@ -63,10 +63,13 @@
           foreach ($permissions as $key => $value) {
             if($value == "add_staff") echo "<li><a href='".site_url('home/add')."'><i class='fa fa-plus-circle fa-lg'></i> Add Staff</a></li>";
             if($value == "search_staff") echo "<li><a href='".site_url('search')."'><i class='fa fa-search fa-lg'></i> Search Staff</a></li>";
+            if($value == "invite_user") echo "<li><a href='".site_url('home/invite_user')."'><i class='fa fa-plug fa-lg'></i> Invite User</a></li>";
+            if($value == "user_group") echo "<li><a href='".site_url('home/user_toggle')."'><i class='fa fa-cubes fa-lg'></i> User Group</a></li>";
+            if($value == "toggle_user") echo "<li><a href='".site_url('home/user_toggle')."'><i class='fa fa-bolt fa-lg'></i> User Toggle</a></li>";
             if($value == "print_staff") echo "<li><a href='".site_url('home/printing')."'><i class='fa fa-print fa-lg'></i> Print</a></li>";
           }
         ?>
-        <li><a href="<?php echo site_url('login/logout');?>"><i class="fa fa-users fa-lg"></i> Log Out</a></li>
+        <li><a href="<?php echo site_url('login/logout');?>"><i class="fa fa-circle-o fa-lg"></i> Log Out</a></li>
 
       
 
