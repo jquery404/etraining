@@ -60,15 +60,34 @@ class M_user extends CI_Model
 		return $query->result_array();
 	}
 
-	public function getUserGroup()
+	public function getRoles($name)
+	{
+		$query = $this->db->get_where('roles', array('name !=' => $name));		
+		$this->details = $query->result();
+
+		return $this->details;
+	}
+
+	public function getUserGroup($id)
 	{
 		$this->db->select('u.id as userid, u.email as user_email, r.name as role, r.id as role_id');    
 		$this->db->from('users as u');
-		$this->db->join('assigned_roles as asr', 'u.id != 3 AND u.id = asr.user_id');
+		$this->db->join('assigned_roles as asr', 'u.id != '. $id .' AND u.id = asr.user_id');
 		$this->db->join('roles as r', 'r.id = asr.role_id');
 		$query = $this->db->get();
 
 		return $query->result_array();
+	}
+
+	public function cngUserGroup()
+	{
+		$this->db->where('user_id', $this->input->post('userid'));
+		$this->db->update('assigned_roles', array(
+			'role_id' 	=> $this->input->post('roleid')
+			)
+		);
+
+		return ($this->db->affected_rows() != 1) ? false : true;
 	}
 
 

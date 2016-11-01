@@ -279,7 +279,6 @@ class Home extends CI_Controller
 		$role = $this->session->userdata('userdata')['role'];
 		$perm = $this->session->userdata('userdata')['permissions'];
 
-		
 		if ($this->session->userdata('is_logged_in') && in_array("user_group", $perm)){
 			$this->load->model('m_user');		
 
@@ -289,7 +288,8 @@ class Home extends CI_Controller
 			$data['show_nav'] = true;
 			$data['show_header'] = true;	
 			$data['permissions'] = $perm;
-			$data['user_group'] = $this->m_user->getUserGroup();
+			$data['user_group'] = $this->m_user->getUserGroup($this->session->userdata('userdata')['id']);
+			$data['roles_name'] = $this->m_user->getRoles($role);
 			$data['body_class']= 'skin-blue sidebar-mini';
 			$data['title'] = 'Admin Page';
 			$data['main_content'] = 'vUserGroup';
@@ -300,6 +300,36 @@ class Home extends CI_Controller
 			redirect('login');
 
 		
+	}
+
+	public function cngUserGroup()
+	{
+		$role = $this->session->userdata('userdata')['role'];
+		$perm = $this->session->userdata('userdata')['permissions'];
+
+		
+		if ($this->session->userdata('is_logged_in') && in_array("user_group", $perm)){
+			$this->load->model('m_user');
+
+			$query = $this->m_user->cngUserGroup();
+			
+			if($query)
+			{
+				$data = array(				
+					'status' => 1,
+					'msg' => 'Successfully changed'
+				);
+				echo json_encode($data);
+			}
+			else
+			{
+				$data = array(				
+					'status' => 0,
+					'err_msg' => 'Error occured' 
+				);
+				echo json_encode($data);
+			}
+		}
 	}
 
 	public function user_toggle()

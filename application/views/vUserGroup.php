@@ -36,24 +36,16 @@
                 <th>Name</th>
               </tr>
 
-              <?php 
-                $roles = array();
-                foreach ($user_group as $key=>$student)
-                {
-                  $roles[$student['role_id']] = $student['role'];                  
-                }
-              ?>
-
               <?php foreach ($user_group as $key=>$student): ?>
                 <tr alt="<?php echo $student['userid']; ?>">
                   <td><?php echo ($key+1); ?></td>
                   <td><?php echo $student['user_email']; ?></td>
-                  <td><select>
+                  <td><select class="user_group">
                     <?php
-                      foreach($roles as $k => $role):
-                        if ($student['role'] == $role) $sel = "selected"; 
+                      foreach($roles_name as $k => $role):
+                        if ($student['role'] == $role->name) $sel = "selected"; 
                         else $sel = "";
-                        echo '<option value="'.$k.'" '.$sel.'>'.$role.'</option>';
+                        echo '<option value="'.$role->id.'" '.$sel.'>'.$role->name.'</option>';
                       endforeach;
                     ?>
                     </select>

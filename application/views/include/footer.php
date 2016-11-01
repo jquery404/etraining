@@ -188,12 +188,32 @@
               location.reload(true);
             else
             {
-              sweetAlert("Oops...", res.err_msg, "error");             
-              $this.removeAttr('disabled');
+              sweetAlert("Oops...", res.err_msg, "error");
+              location.reload(true);
             }    
       }); 
       
       
+    });
+
+    $('.user_group').on('change', function() {
+      var optionSelected = $("option:selected", this).html();
+      var valueSelected = this.value;
+      var id = $(this).parents('tr').attr('alt');
+
+      $.post("<?php echo site_url(); ?>/home/cngUserGroup", 
+        { userid: id, roleid: valueSelected }, function(data) {           
+          
+          var res = JSON.parse(data); 
+
+          if(res.status)
+            location.reload(true);
+          else
+          {
+            sweetAlert("Oops...", res.err_msg, "error");
+            location.reload(true);  
+          }   
+      });
     });
 
 
