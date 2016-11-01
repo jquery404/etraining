@@ -268,7 +268,37 @@ class Home extends CI_Controller
 
 			}
 
-		}
+		}else
+			redirect('login');
+		
+	}
+	
+
+	public function user_group()
+	{
+		$role = $this->session->userdata('userdata')['role'];
+		$perm = $this->session->userdata('userdata')['permissions'];
+
+		
+		if ($this->session->userdata('is_logged_in') && in_array("user_group", $perm)){
+			$this->load->model('m_user');		
+
+			$data['title'] = 'Welcome to Training';
+			$data['role'] = $role;
+			$data['error'] = $this->session->flashdata('error');
+			$data['show_nav'] = true;
+			$data['show_header'] = true;	
+			$data['permissions'] = $perm;
+			$data['user_group'] = $this->m_user->getUserGroup();
+			$data['body_class']= 'skin-blue sidebar-mini';
+			$data['title'] = 'Admin Page';
+			$data['main_content'] = 'vUserGroup';
+			$this->load->view('include/template', $data);
+
+
+		}else
+			redirect('login');
+
 		
 	}
 
@@ -296,6 +326,7 @@ class Home extends CI_Controller
 			redirect('login');
 
 	}
+
 
 	public function toggleUser()
 	{

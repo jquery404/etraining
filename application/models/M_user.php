@@ -60,6 +60,18 @@ class M_user extends CI_Model
 		return $query->result_array();
 	}
 
+	public function getUserGroup()
+	{
+		$this->db->select('u.id as userid, u.email as user_email, r.name as role, r.id as role_id');    
+		$this->db->from('users as u');
+		$this->db->join('assigned_roles as asr', 'u.id != 3 AND u.id = asr.user_id');
+		$this->db->join('roles as r', 'r.id = asr.role_id');
+		$query = $this->db->get();
+
+		return $query->result_array();
+	}
+
+
 	public function getSearchResults()
 	{
 		$x = $this->input->post('x');
